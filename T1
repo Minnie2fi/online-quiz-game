@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Quiz Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-box {
+            margin-bottom: 2rem;
+        }
+
+        .question-box h2 {
+            margin: 0 0 1rem 0;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .option:hover {
+            background-color: #f0f0f0;
+            border-color: #4CAF50;
+        }
+
+        .timer {
+            text-align: right;
+            font-size: 1.2rem;
+            color: #4CAF50;
+        }
+
+        .scoreboard {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .leaderboard {
+            margin-top: 2rem;
+        }
+
+        .leaderboard h3 {
+            margin: 0 0 1rem;
+        }
+
+        .leaderboard ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .leaderboard li {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Online Quiz Game</h1>
+    </header>
+
+    <div class="container">
+        <!-- Timer and Score -->
+        <div class="scoreboard">
+            <div class="timer">Time Left: <span id="timer">30</span>s</div>
+            <div class="score">Score: <span id="score">0</span></div>
+        </div>
+
+        <!-- Question Section -->
+        <div class="question-box">
+            <h2 id="question">What is the capital of France?</h2>
+
+            <!-- Options -->
+            <div class="options">
+                <div class="option" onclick="selectOption(this)" data-correct="false">Berlin</div>
+                <div class="option" onclick="selectOption(this)" data-correct="true">Paris</div>
+                <div class="option" onclick="selectOption(this)" data-correct="false">Madrid</div>
+                <div class="option" onclick="selectOption(this)" data-correct="false">Rome</div>
+            </div>
+        </div>
+
+        <!-- Leaderboard Section -->
+        <div class="leaderboard">
+            <h3>Leaderboard</h3>
+            <ul id="leaderboard">
+                <li>Player1: 100 points</li>
+                <li>Player2: 90 points</li>
+                <li>Player3: 80 points</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Online Quiz Game. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let timeLeft = 30;
+        const timerElement = document.getElementById('timer');
+        const scoreElement = document.getElementById('score');
+        let score = 0;
+
+        function startTimer() {
+            const timer = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    timerElement.textContent = timeLeft;
+                } else {
+                    clearInterval(timer);
+                    alert('Time is up!');
+                }
+            }, 1000);
+        }
+
+        function selectOption(option) {
+            const isCorrect = option.getAttribute('data-correct') === 'true';
+            if (isCorrect) {
+                score += 10;
+                scoreElement.textContent = score;
+                option.style.backgroundColor = '#4CAF50';
+            } else {
+                option.style.backgroundColor = '#f44336';
+            }
+            setTimeout(() => {
+                option.style.backgroundColor = '';
+            }, 500);
+        }
+
+        startTimer();
+    </script>
+</body>
+</html>
